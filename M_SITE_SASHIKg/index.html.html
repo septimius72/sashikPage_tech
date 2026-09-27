@@ -1,0 +1,453 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ALEX BECZ // TERMINAL_SYS_v2026</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        brutal: {
+                            bg: '#000000',
+                            panel: '#0d0d0d',
+                            green: '#00ff66',
+                            yellow: '#ffea00',
+                            red: '#ff0033',
+                            border: '#333333'
+                        }
+                    },
+                    fontFamily: {
+                        mono: ['Courier New', 'Courier', 'monospace'],
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            background-color: #000000;
+            color: #00ff66;
+            font-family: 'Courier New', Courier, monospace;
+        }
+
+        /* Stark Brutalist Borders & Shadows */
+        .brutal-border {
+            border: 3px solid #00ff66;
+            box-shadow: 6px 6px 0px #00ff66;
+        }
+
+        .brutal-border-yellow {
+            border: 3px solid #ffea00;
+            box-shadow: 6px 6px 0px #ffea00;
+        }
+
+        .brutal-btn {
+            border: 3px solid #00ff66;
+            background: #000000;
+            color: #00ff66;
+            transition: all 0.1s ease;
+        }
+
+        .brutal-btn:hover {
+            background: #00ff66;
+            color: #000000;
+            box-shadow: 4px 4px 0px #ffffff;
+            transform: translate(-2px, -2px);
+        }
+
+        .brutal-btn-yellow {
+            border: 3px solid #ffea00;
+            background: #ffea00;
+            color: #000000;
+            transition: all 0.1s ease;
+        }
+
+        .brutal-btn-yellow:hover {
+            background: #000000;
+            color: #ffea00;
+            box-shadow: 4px 4px 0px #00ff66;
+            transform: translate(-2px, -2px);
+        }
+
+        /* Marquee Ticker Animation */
+        @keyframes marquee {
+            0% { transform: translateX(0%); }
+            100% { transform: translateX(-50%); }
+        }
+
+        .animate-marquee {
+            display: flex;
+            width: 200%;
+            animation: marquee 15s linear infinite;
+        }
+
+        .toast-slide {
+            transition: transform 0.2s ease, opacity 0.2s ease;
+        }
+
+        /* Terminal Cursor Blink */
+        .cursor-blink {
+            animation: blink 1s step-end infinite;
+        }
+
+        @keyframes blink {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0; }
+        }
+    </style>
+</head>
+<body class="selection:bg-yellow-300 selection:text-black min-h-screen relative overflow-x-hidden">
+
+    <!-- Toast Notification -->
+    <div id="toast" class="fixed bottom-6 right-6 z-50 transform translate-y-20 opacity-0 toast-slide bg-black text-yellow-300 px-6 py-4 border-4 border-yellow-300 shadow-[6px_6px_0px_#00ff66] flex items-center space-x-3 pointer-events-none">
+        <span class="w-3 h-3 bg-yellow-300 animate-ping"></span>
+        <span id="toast-msg" class="text-xs font-mono font-bold tracking-widest uppercase">SYS:// DATA_COPIED</span>
+    </div>
+
+    <!-- Top Running Marquee Banner -->
+    <div class="bg-yellow-300 text-black font-bold text-xs py-2 border-b-4 border-green-500 overflow-hidden font-mono uppercase tracking-widest">
+        <div class="animate-marquee whitespace-nowrap">
+            <span>/// ALEX BECZ // SR TECHNICAL RECRUITER[cite: 2] /// 12+ YEARS TALENT ACQUISITION OPERATIONS[cite: 2] /// AI/ML PIPELINES[cite: 2] /// CYBERSECURITY REVERSE ENGINEERING[cite: 2] /// HIGH-PERFORMANCE GRAPHICS SYSTEMS[cite: 2] /// OVER $25M REVENUE GENERATED[cite: 2] /// </span>
+            <span>/// ALEX BECZ // SR TECHNICAL RECRUITER[cite: 2] /// 12+ YEARS TALENT ACQUISITION OPERATIONS[cite: 2] /// AI/ML PIPELINES[cite: 2] /// CYBERSECURITY REVERSE ENGINEERING[cite: 2] /// HIGH-PERFORMANCE GRAPHICS SYSTEMS[cite: 2] /// OVER $25M REVENUE GENERATED[cite: 2] /// </span>
+        </div>
+    </div>
+
+    <!-- Navigation Header -->
+    <header class="bg-black border-b-4 border-green-500 py-4 px-6 sticky top-0 z-40">
+        <div class="max-w-7xl mx-auto flex items-center justify-between">
+            <a href="#" class="font-bold text-lg text-green-500 flex items-center space-x-2">
+                <span class="bg-green-500 text-black px-2 py-0.5 font-black">[SYS_ROOT]</span>
+                <span>ALEX_BECZ.EXE</span>
+            </a>
+
+            <nav class="hidden md:flex items-center space-x-6 text-xs font-bold tracking-widest">
+                <a href="#hero" class="hover:bg-green-500 hover:text-black px-2 py-1 transition-colors">// 01_OVERVIEW</a>
+                <a href="#domains" class="hover:bg-green-500 hover:text-black px-2 py-1 transition-colors">// 02_DOMAINS</a>
+                <a href="#experience" class="hover:bg-green-500 hover:text-black px-2 py-1 transition-colors">// 03_TRACK_RECORD</a>
+                <a href="#toolkit" class="hover:bg-green-500 hover:text-black px-2 py-1 transition-colors">// 04_TOOLKIT</a>
+            </nav>
+
+            <div class="flex items-center space-x-3">
+                <button onclick="openResumeModal()" class="brutal-btn px-4 py-2 text-xs font-bold uppercase">
+                    [ READ_CV ]
+                </button>
+                <a href="mailto:alexanderhbecz@gmail.com" class="brutal-btn-yellow px-4 py-2 text-xs font-bold uppercase">
+                    CONNECT
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <main class="max-w-7xl mx-auto px-6 py-12">
+
+        <!-- Full-Screen Dynamic Headline + Counter Widgets Hero -->
+        <section id="hero" class="min-h-[80vh] flex flex-col justify-between py-6">
+            
+            <!-- Terminal Header Output -->
+            <div class="border-b-2 border-green-500/40 pb-4 mb-8 text-xs text-green-500/80">
+                <p>&gt; INITIALIZING_TALENT_ENGINE... OK</p>
+                <p>&gt; LOCATION: RIVERTON, UT // TARGETING: GLOBAL TECH LEADERSHIP[cite: 2]</p>
+            </div>
+
+            <!-- Dynamic Full-Screen Headline -->
+            <div class="my-auto">
+                <h1 class="text-4xl sm:text-6xl md:text-7xl lg:text-8xl font-black uppercase leading-none tracking-tight text-white mb-6">
+                    ENGINEERING <span class="text-green-500">HIGH-IMPACT</span> TA PIPELINES<span class="cursor-blink text-yellow-300">_</span>
+                </h1>
+
+                <p class="text-sm sm:text-base font-bold text-yellow-300 max-w-3xl leading-relaxed mb-8 bg-neutral-950 p-4 border-l-4 border-yellow-300">
+                    Relentless talent acquisition leader with 12+ years delivering rapid, measurable impact for global tech organizations from 60 to 5,000+ employees[cite: 2]. Sourcing Staff ICs to C-Suite Executives in AI, Cybersecurity, and Graphics[cite: 2].
+                </p>
+
+                <!-- Command Quick Actions -->
+                <div class="flex flex-wrap gap-4 mb-12">
+                    <a href="https://www.linkedin.com/in/alxhb/" target="_blank" rel="noopener" class="brutal-btn-yellow px-6 py-4 text-xs font-black tracking-wider uppercase flex items-center space-x-2">
+                        <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24"><path d="M19 3a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h14m-.5 15.5v-5.3a3.26 3.26 0 0 0-3.26-3.26c-.85 0-1.84.52-2.28 1.3v-1.11h-2.79v8.37h2.79v-4.93c0-.77.62-1.4 1.39-1.4a1.4 1.4 0 0 1 1.4 1.4v4.93h2.75M6.88 8.56a1.68 1.68 0 0 0 1.68-1.68c0-.93-.75-1.69-1.68-1.69a1.69 1.69 0 0 0-1.69 1.69c0 .93.76 1.68 1.69 1.68m1.39 9.94v-8.37H5.5v8.37h2.77z"/></svg>
+                        <span>LINKEDIN // ALXHB</span>
+                    </a>
+                    <button onclick="copyToClipboard('alexanderhbecz@gmail.com', 'EMAIL COPIED')" class="brutal-btn px-6 py-4 text-xs font-black tracking-wider uppercase">
+                        alexanderhbecz@gmail.com
+                    </button>
+                    <a href="https://github.com/septimius72" target="_blank" rel="noopener" class="brutal-btn px-4 py-4 text-xs font-black tracking-wider uppercase">
+                        GITHUB
+                    </a>
+                </div>
+            </div>
+
+            <!-- Animated Brutalist Counter Widgets -->
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-6 pt-6">
+                <div class="p-6 brutal-border bg-black">
+                    <span class="text-xs font-bold text-green-500 uppercase block mb-1">[ COUNTER_01 ]</span>
+                    <span class="text-4xl font-black text-white block counter-val" data-target="12">12+ YRS</span>
+                    <span class="text-[10px] font-bold text-yellow-300 block mt-2 uppercase">TA EXPERIENCE[cite: 2]</span>
+                </div>
+
+                <div class="p-6 brutal-border bg-black">
+                    <span class="text-xs font-bold text-green-500 uppercase block mb-1">[ COUNTER_02 ]</span>
+                    <span class="text-4xl font-black text-yellow-300 block">$25M+</span>
+                    <span class="text-[10px] font-bold text-green-500 block mt-2 uppercase">REVENUE GENERATED[cite: 2]</span>
+                </div>
+
+                <div class="p-6 brutal-border bg-black">
+                    <span class="text-xs font-bold text-green-500 uppercase block mb-1">[ COUNTER_03 ]</span>
+                    <span class="text-4xl font-black text-white block">-40%</span>
+                    <span class="text-[10px] font-bold text-yellow-300 block mt-2 uppercase">TIME-TO-FILL REDUCTION[cite: 2]</span>
+                </div>
+
+                <div class="p-6 brutal-border bg-black">
+                    <span class="text-xs font-bold text-green-500 uppercase block mb-1">[ COUNTER_04 ]</span>
+                    <span class="text-4xl font-black text-green-500 block">+250%</span>
+                    <span class="text-[10px] font-bold text-white block mt-2 uppercase">DEI HIRE GROWTH[cite: 2]</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- Command Line Toggles & Specialized Domains Section -->
+        <section id="domains" class="py-16">
+            <div class="flex flex-col md:flex-row md:items-center justify-between border-b-4 border-green-500 pb-4 mb-8">
+                <div>
+                    <span class="text-xs font-bold text-yellow-300 uppercase tracking-widest">// DOMAIN MATRIX</span>
+                    <h2 class="text-2xl sm:text-3xl font-black text-white uppercase">
+                        <a href="https://proximoalex.weebly.com/recruiting.html" target="_blank" rel="noopener" class="hover:bg-green-500 hover:text-black px-1 transition-colors">
+                            recruiting / Specialized Domain Sourcing
+                        </a>
+                    </h2>
+                </div>
+                <div class="text-xs font-bold text-green-500 mt-2 md:mt-0">[ TOGGLE_INTERACTIVE_MODES ]</div>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <!-- Domain 1: AI & GenAI -->
+                <a href="https://proximoalex.weebly.com/" target="_blank" rel="noopener" class="p-8 brutal-border bg-neutral-950 group block">
+                    <div class="flex items-center justify-between mb-4">
+                        <span class="bg-green-500 text-black font-black text-xs px-2 py-1">[ DOMAIN_01 ]</span>
+                        <span class="text-xs font-bold text-yellow-300">AI_STACK</span>
+                    </div>
+                    <h3 class="text-2xl font-black text-white group-hover:text-green-500 transition-colors mb-3 uppercase">Artificial Intelligence & ML</h3>
+                    <p class="text-xs text-green-500/80 leading-relaxed mb-6 font-mono">
+                        AI-driven recruitment stack (Gemini, ChatGPT, Prompt Engineering) for hyper-personalized candidate sequencing and sourcing AI/ML Engineers & LLM Specialists[cite: 2].
+                    </p>
+                    <div class="space-y-1 text-xs font-bold text-yellow-300">
+                        <p>&gt; ML Engineers[cite: 2]</p>
+                        <p>&gt; Prompt Engineering[cite: 2]</p>
+                        <p>&gt; Python / FastAPI[cite: 2]</p>
+                    </div>
+                </a>
+
+                <!-- Domain 2: Cybersecurity -->
+                <a href="https://proximoalex.weebly.com/cybersecurity.html" target="_blank" rel="noopener" class="p-8 brutal-border-yellow bg-neutral-950 group block">
+                    <div class="flex items-center justify-between mb-4">
+                        <span class="bg-yellow-300 text-black font-black text-xs px-2 py-1">[ DOMAIN_02 ]</span>
+                        <span class="text-xs font-bold text-green-500">SECURITY</span>
+                    </div>
+                    <h3 class="text-2xl font-black text-white group-hover:text-yellow-300 transition-colors mb-3 uppercase">Cybersecurity & Security</h3>
+                    <p class="text-xs text-yellow-300/80 leading-relaxed mb-6 font-mono">
+                        Global sourcing strategies across US, EMEA, LATAM, and APJ for Reverse Engineers, SecOps, and Security Architects (Proofpoint TA veteran)[cite: 2].
+                    </p>
+                    <div class="space-y-1 text-xs font-bold text-green-500">
+                        <p>&gt; Reverse Engineering[cite: 2]</p>
+                        <p>&gt; OSINT Sourcing[cite: 2]</p>
+                        <p>&gt; SecOps & Architects[cite: 2]</p>
+                    </div>
+                </a>
+
+                <!-- Domain 3: Graphics -->
+                <a href="https://proximoalex.weebly.com/ai-art.html" target="_blank" rel="noopener" class="p-8 brutal-border bg-neutral-950 group block">
+                    <div class="flex items-center justify-between mb-4">
+                        <span class="bg-green-500 text-black font-black text-xs px-2 py-1">[ DOMAIN_03 ]</span>
+                        <span class="text-xs font-bold text-yellow-300">GRAPHICS</span>
+                    </div>
+                    <h3 class="text-2xl font-black text-white group-hover:text-green-500 transition-colors mb-3 uppercase">Graphics & Systems</h3>
+                    <p class="text-xs text-green-500/80 leading-relaxed mb-6 font-mono">
+                        Sourcing Senior/Staff Engineers across high-performance backend architectures, C#/.NET, Go, Python, and C++[cite: 2].
+                    </p>
+                    <div class="space-y-1 text-xs font-bold text-yellow-300">
+                        <p>&gt; Staff Engineers[cite: 2]</p>
+                        <p>&gt; C# / .NET / Go[cite: 2]</p>
+                        <p>&gt; SDETs & Infrastructure[cite: 2]</p>
+                    </div>
+                </a>
+            </div>
+        </section>
+
+        <!-- Track Record Terminal Timeline -->
+        <section id="experience" class="py-12">
+            <div class="border-b-4 border-green-500 pb-4 mb-8">
+                <span class="text-xs font-bold text-yellow-300 uppercase tracking-widest">// EXECUTION HISTORY</span>
+                <h2 class="text-2xl sm:text-3xl font-black text-white uppercase">Professional Track Record</h2>
+            </div>
+
+            <div class="space-y-6">
+                <!-- Filevine -->
+                <div class="p-8 brutal-border bg-black">
+                    <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 mb-4 border-b-2 border-green-500/30 pb-2">
+                        <div>
+                            <h3 class="text-xl font-black text-white uppercase">Senior Technical Recruiter & AI Talent Partner</h3>
+                            <p class="text-xs font-bold text-yellow-300">FILEVINE • SALT LAKE CITY, UT[cite: 2]</p>
+                        </div>
+                        <span class="bg-green-500 text-black px-2 py-1 text-xs font-black uppercase self-start sm:self-auto">MAY 2025 – PRESENT[cite: 2]</span>
+                    </div>
+                    <ul class="space-y-2 text-xs font-bold text-green-500/90 font-mono">
+                        <li>[+] Built AI-driven recruitment architecture utilizing Gemini & ChatGPT for candidate sequencing and market mapping[cite: 2].</li>
+                        <li>[+] Sourced and hired high-impact Software Engineers and ML/AI Engineers in Czechia & EMEA expansion[cite: 2].</li>
+                        <li>[+] Hired 16 BDRs/SDRs in first 3 weeks, setting company hiring volume records[cite: 2].</li>
+                    </ul>
+                </div>
+
+                <!-- OrionIG -->
+                <div class="p-8 brutal-border bg-black">
+                    <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 mb-4 border-b-2 border-green-500/30 pb-2">
+                        <div>
+                            <h3 class="text-xl font-black text-white uppercase">Senior TA Specialist</h3>
+                            <p class="text-xs font-bold text-yellow-300">ORIONIG • MURRAY, UT[cite: 2]</p>
+                        </div>
+                        <span class="border border-green-500 text-green-500 px-2 py-1 text-xs font-black uppercase self-start sm:self-auto">JUNE 2024 – MAY 2025[cite: 2]</span>
+                    </div>
+                    <ul class="space-y-2 text-xs font-bold text-green-500/90 font-mono">
+                        <li>[+] Built candidate pipelines across SaaS, Health Tech, FinTech, and AI/ML, increasing talent pipelining by 110%[cite: 2].</li>
+                        <li>[+] Utilized advanced sourcing patterns including extended Boolean, filetype X-raying, and natural language search[cite: 2].</li>
+                    </ul>
+                </div>
+
+                <!-- Proofpoint -->
+                <div class="p-8 brutal-border bg-black">
+                    <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 mb-4 border-b-2 border-green-500/30 pb-2">
+                        <div>
+                            <h3 class="text-xl font-black text-white uppercase">Senior Technical Recruiter</h3>
+                            <p class="text-xs font-bold text-yellow-300">PROOFPOINT • DRAPER, UT[cite: 2]</p>
+                        </div>
+                        <span class="border border-green-500 text-green-500 px-2 py-1 text-xs font-black uppercase self-start sm:self-auto">FEB 2022 – MAY 2024[cite: 2]</span>
+                    </div>
+                    <ul class="space-y-2 text-xs font-bold text-green-500/90 font-mono">
+                        <li>[+] Executed global recruiting strategies for enterprise cybersecurity across US, EMEA, LATAM, and APJ[cite: 2].</li>
+                        <li>[+] Achieved 120% presence growth in Argentina and managed/mentored a team of 5 recruiters[cite: 2].</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- Technical Toolkit Matrix -->
+        <section id="toolkit" class="py-12">
+            <div class="p-8 brutal-border-yellow bg-black">
+                <div class="mb-6 border-b-2 border-yellow-300 pb-2">
+                    <span class="text-xs font-bold text-green-500 uppercase tracking-widest">// SYSTEM MATRIX</span>
+                    <h2 class="text-2xl font-black text-yellow-300 uppercase">ATS Platforms & Sourcing Tools</h2>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6 text-xs font-mono">
+                    <div>
+                        <p class="text-white font-bold mb-2 uppercase">[ ATS PLATFORMS ]</p>
+                        <p class="text-green-500">&gt; Lever[cite: 2]</p>
+                        <p class="text-green-500">&gt; Greenhouse[cite: 2]</p>
+                        <p class="text-green-500">&gt; Ashby[cite: 2]</p>
+                        <p class="text-green-500">&gt; ICIMS / Workday[cite: 2]</p>
+                    </div>
+
+                    <div>
+                        <p class="text-white font-bold mb-2 uppercase">[ SOURCING STACK ]</p>
+                        <p class="text-yellow-300">&gt; OSINT[cite: 2]</p>
+                        <p class="text-yellow-300">&gt; Extended Boolean[cite: 2]</p>
+                        <p class="text-yellow-300">&gt; Python Sourcing[cite: 2]</p>
+                        <p class="text-yellow-300">&gt; Prompt Engineering[cite: 2]</p>
+                    </div>
+
+                    <div>
+                        <p class="text-white font-bold mb-2 uppercase">[ CREDENTIALS ]</p>
+                        <p class="text-white">&gt; B.B.A. IT Mgmt (Candidate) - WGU[cite: 2]</p>
+                        <p class="text-green-500">&gt; SHRM / HRCI[cite: 2]</p>
+                        <p class="text-green-500">&gt; CompTIA / ISC2 Candidate[cite: 2]</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="border-t-4 border-green-500 bg-black py-8 px-6 text-xs font-mono">
+        <div class="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-4">
+            <div>
+                <p class="font-black text-white">ALEXANDER BECZ // SR TECHNICAL RECRUITER[cite: 2]</p>
+                <p class="text-green-500">RIVERTON, UT 84065 • 801.903.9097[cite: 2]</p>
+            </div>
+
+            <div class="flex items-center space-x-6 font-bold">
+                <a href="https://www.linkedin.com/in/alxhb/" target="_blank" class="hover:bg-yellow-300 hover:text-black px-1">[LINKEDIN][cite: 2]</a>
+                <a href="https://www.github.com/septimius72" target="_blank" class="hover:bg-yellow-300 hover:text-black px-1">[GITHUB][cite: 2]</a>
+                <a href="https://proximoalex.weebly.com/" target="_blank" class="hover:bg-yellow-300 hover:text-black px-1">[WEEBLY][cite: 2]</a>
+                <a href="mailto:alexanderhbecz@gmail.com" class="hover:bg-yellow-300 hover:text-black px-1">[EMAIL][cite: 2]</a>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Interactive Resume Modal -->
+    <div id="resume-modal" class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/90 opacity-0 pointer-events-none transition-opacity duration-200">
+        <div class="bg-black max-w-2xl w-full p-8 brutal-border-yellow">
+            <div class="flex items-center justify-between border-b-2 border-yellow-300 pb-4 mb-6">
+                <div>
+                    <h3 class="text-xl font-black text-yellow-300 uppercase">ALEXANDER_BECZ.CV</h3>
+                    <p class="text-xs text-green-500">Sr. Technical Recruiter | OSINT | AI Talent[cite: 2]</p>
+                </div>
+                <button onclick="closeResumeModal()" class="text-yellow-300 hover:bg-yellow-300 hover:text-black px-2 py-1 font-black">
+                    [X]
+                </button>
+            </div>
+
+            <div class="text-xs text-green-500 space-y-4 font-mono">
+                <p>
+                    Relentless talent acquisition leader with 12+ years delivering rapid, measurable impact for global tech organizations ranging from 60 to 5,000+ employees and up to $1B+ in annual revenue[cite: 2].
+                </p>
+
+                <div class="p-4 border border-green-500 bg-neutral-950">
+                    <p class="text-yellow-300 font-bold mb-2">// DIRECT CONTACT DIRECTORY</p>
+                    <p>Location: Riverton, UT 84065[cite: 2]</p>
+                    <p>Phone: 801.903.9097[cite: 2]</p>
+                    <p>Email: alexanderhbecz@gmail.com[cite: 2]</p>
+                </div>
+            </div>
+
+            <div class="mt-8 pt-4 border-t-2 border-yellow-300 flex justify-end space-x-3 text-xs font-bold">
+                <button onclick="closeResumeModal()" class="brutal-btn px-4 py-2">CLOSE</button>
+                <button onclick="copyToClipboard('alexanderhbecz@gmail.com', 'EMAIL COPIED')" class="brutal-btn-yellow px-4 py-2">COPY_EMAIL</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- JS Functions -->
+    <script>
+        function copyToClipboard(text, message) {
+            navigator.clipboard.writeText(text).then(() => {
+                showToast(message);
+            });
+        }
+
+        function showToast(message) {
+            const toast = document.getElementById('toast');
+            const toastMsg = document.getElementById('toast-msg');
+            toastMsg.innerText = "SYS:// " + message;
+            toast.classList.remove('translate-y-20', 'opacity-0');
+            toast.classList.add('translate-y-0', 'opacity-100');
+
+            setTimeout(() => {
+                toast.classList.remove('translate-y-0', 'opacity-100');
+                toast.classList.add('translate-y-20', 'opacity-0');
+            }, 3000);
+        }
+
+        function openResumeModal() {
+            const modal = document.getElementById('resume-modal');
+            modal.classList.remove('pointer-events-none', 'opacity-0');
+            modal.classList.add('opacity-100');
+        }
+
+        function closeResumeModal() {
+            const modal = document.getElementById('resume-modal');
+            modal.classList.remove('opacity-100');
+            modal.classList.add('pointer-events-none', 'opacity-0');
+        }
+    </script>
+</body>
+</html>
